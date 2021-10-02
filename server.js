@@ -7,7 +7,9 @@ const app = express();
 connectDB();
 
 // view setup
-// app.set('view engine', 'ejs');
+app.set('view engine', 'ejs');
+app.set('views', __dirname);
+
 
 // middlewares
 app.use(express.static(path.join(__dirname ,'public', 'food-website')));
@@ -23,6 +25,6 @@ app.get('/', (req, res) => {
     res.sendFile('index.html');
 })
 
-app.get('/maps',(req,res) =>{
-    res.sendFile('./index.html' , {root:__dirname})
-})
+// app.get('/maps',(req,res) =>{
+//     res.sendFile('./index.html' , {root:__dirname})
+// })

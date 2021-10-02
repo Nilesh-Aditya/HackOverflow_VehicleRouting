@@ -20,7 +20,7 @@ route.post('/',express.urlencoded({ extended: true }), async (req, res) => {
         console.log(user, "  user");
         if (user) {
             if(user.password === password){
-                res.json({user:"Login Success"})
+                res.render('map')
             }
             else{
                 const obj = { password: ' Incorrect password' };
