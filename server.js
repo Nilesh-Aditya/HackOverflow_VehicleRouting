@@ -22,3 +22,7 @@ app.listen(PORT, () => console.log(`app is started running on http://localhost:$
 app.get('/', (req, res) => {
     res.sendFile('index.html');
 })
+
+app.get('/maps',(req,res) =>{
+    res.sendFile('./index.html' , {root:__dirname})
+})
