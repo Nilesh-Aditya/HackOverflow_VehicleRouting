@@ -1,9 +1,16 @@
+async function file(){
+    let res = await fetch('./delivery_points.json');
+    let data = await res.json();
+    
+    return data;
+}
+
 let map;
 
 function initMap() {
   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 2,
-    center: new google.maps.LatLng(2.8, -187.3),
+    zoom: 12,
+    center: new google.maps.LatLng(12.9716, 77.5946),
     mapTypeId: "terrain",
   });
 
@@ -20,14 +27,33 @@ function initMap() {
 
 // Loop through the results array and place a marker for each
 // set of coordinates.
-const eqfeed_callback = function (results) {
-  for (let i = 0; i < results.features.length; i++) {
-    const coords = results.features[i].geometry.coordinates;
-    const latLng = new google.maps.LatLng(coords[1], coords[0]);
+const eqfeed_callback = async function () {
+    const data = await file();
+    // console.log(data.data.customer_details);
+    // for (let i = 0; i < results.features.length; i++) {
+    // const coords = results.features[i].geometry.coordinates;
+    // const latLng = new google.maps.LatLng(coords[1], coords[0]);
 
-    new google.maps.Marker({
-      position: latLng,
-      map: map,
-    });
-  }
+    //     new google.maps.Marker({
+    //         position: latLng,
+    //         map: map,
+    //     });
+    // }
+    let cust = data.data.customer_details;
+    let i = 0;
+    for(let key in cust){
+        // console.log(cust[key]['customer_address'].lat_long);
+        let coords = cust[key]['customer_address'].lat_long;
+
+        // console.log(Number(coords.latitude), Number(coords.longitude));
+        let lat_lng = new google.maps.LatLng(Number(coords.latitude), Number(coords.longitude));
+        
+        new google.maps.Marker({
+            position: lat_lng,
+            map: map
+        });
+        // console.log(i++);
+    }
 };
+
+eqfeed_callback();
