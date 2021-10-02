@@ -15,12 +15,11 @@ route.post('/',express.urlencoded({ extended: true }), async (req, res) => {
     const { email, password } = req.body;
     console.log(req.body);
     try {
-
         const user = await User.findOne({ email });
         console.log(user, "  user");
         if (user) {
             if(user.password === password){
-                res.render('map')
+                res.render({user:"Login Success"})
             }
             else{
                 const obj = { password: ' Incorrect password' };
@@ -31,7 +30,6 @@ route.post('/',express.urlencoded({ extended: true }), async (req, res) => {
             const obj = { email: 'incorrect Email-Id and password' };
             throw obj;
         }
-        
     } catch (err) {
         res.status(400).json({ errors: Object.values(err) });
     }
