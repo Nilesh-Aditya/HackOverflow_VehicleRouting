@@ -4,7 +4,6 @@
   </a>
 </p>
 <h1 align="center">Hackoverflow Vehicle Routing</h1>
-<p align="center"><i>Delivering goods to all customers and minimising for the cost of the routes.</i></p>
 <p align="center"><br /></p>
 
 The vehicle routing problem is one of the most studied combinatorial optimization topics, due to its practical importance and methodological interest.
