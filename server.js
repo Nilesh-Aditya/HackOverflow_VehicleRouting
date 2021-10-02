@@ -25,6 +25,6 @@ app.get('/', (req, res) => {
     res.sendFile('index.html');
 })
 
-app.get('/map',(req,res) =>{
-    res.sendFile('./index.html' , {root:__dirname})
-})
+// app.get('/maps',(req,res) =>{
+//     res.sendFile('./index.html' , {root:__dirname})
+// })
