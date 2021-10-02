@@ -1,8 +1,8 @@
 async function file(){
-    let res = await fetch('./delivery_points.json');
-    let data = await res.json();
-    
-    return data;
+  let res = await fetch('./delivery_points.json');
+  let data = await res.json();
+  
+  return data;
 }
 
 // let map;
@@ -47,7 +47,7 @@ async function file(){
 
 //         // console.log(Number(coords.latitude), Number(coords.longitude));
 //         let lat_lng = new google.maps.LatLng(Number(coords.latitude), Number(coords.longitude));
-        
+      
 //         new google.maps.Marker({
 //             position: lat_lng,
 //             map: map
@@ -68,17 +68,17 @@ const tiles = L.tileLayer(tileUrl, {attribution});
 tiles.addTo(mymap);
 
 async function putMarker(){
-  const data = await file();
-  let cust = data.data.customer_details;
-  console.log(cust);
-    for(let key in cust){
-        // console.log(cust[key]['customer_address'].lat_long);
-        let coords = cust[key]['customer_address'].lat_long;
+const data = await file();
+let cust = data.data.customer_details;
+console.log(cust);
+  for(let key in cust){
+      // console.log(cust[key]['customer_address'].lat_long);
+      let coords = cust[key]['customer_address'].lat_long;
 
-        if(Object.keys(coords).length > 0){
-          L.marker([Number(coords.latitude), Number(coords.longitude)]).addTo(mymap);
-        }
-    }
+      if(Object.keys(coords).length > 0){
+        L.marker([Number(coords.latitude), Number(coords.longitude)]).addTo(mymap);
+      }
+  }
 }
 
 putMarker();
