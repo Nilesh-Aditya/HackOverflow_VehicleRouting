@@ -41,16 +41,30 @@ async function fn () {
               map: map
           });
 
-          // let icon = {
-          //   url: "./img/im1.png", // url
-          //   scaledSize: new google.maps.Size(50, 50), // scaled size
-          //   origin: new google.maps.Point(0,0), // origin
-          //   anchor: new google.maps.Point(0, 0) // anchor
-          // };
-
-          // if(i <= 10){
-          //   marker.setIcon(icon);
-          // }
+          let icon1 = {
+            url: "./img/un-delivered.svg", // url
+            scaledSize: new google.maps.Size(50, 50), // scaled size
+            origin: new google.maps.Point(0,0), // origin
+            anchor: new google.maps.Point(0, 0) // anchor
+          };
+          
+          
+          let icon2 = {
+            url: "./img/delivered.svg", // url
+            scaledSize: new google.maps.Size(50, 50), // scaled size
+            origin: new google.maps.Point(0,0), // origin
+            anchor: new google.maps.Point(0, 0) // anchor
+          };
+          
+          let icon3 = {
+            url: "./img/my_location.svg", // url
+            scaledSize: new google.maps.Size(50, 50), // scaled size
+            origin: new google.maps.Point(0,0), // origin
+            anchor: new google.maps.Point(0, 0) // anchor
+          };
+          
+            marker.setIcon(icon1);
+          
         }
     }
 }
