@@ -14,5 +14,25 @@ Different types of formulations are proposed in the literature to model vehicle 
 
 So, we hereby propose a novel approach to learn the local-search heuristics that iteratively improves the solution of Vehicle Routing Problem (VRP). Our idea to learn heuristics for combinatorial optimization problems is promising as it can save costly development.
 
+<br/>
 
+---
+## HOME
+![HOME](./img/1.png)
+&nbsp;
 
+## ABOUT
+![ABOUT](./img/4.png)
+&nbsp;
+
+## LOGIN
+![LOGIN](./img/7.png)
+&nbsp;
+
+## CONTACT
+![CONTACT](./img/6.png)
+&nbsp;
+
+## TOP PERFORMERS
+![TOP PERFORMERS](./img/5.png)
+---
