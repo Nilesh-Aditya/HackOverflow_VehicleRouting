@@ -37,20 +37,20 @@ async function fn () {
           // localStorage.setItem('s1', JSON.stringify(arr));
           marker = new google.maps.Marker({
               position: lat_lng,
-              label: String(++i),
+              // label: String(++i),
               map: map
           });
 
-          let icon = {
-            url: "./img/im1.png", // url
-            scaledSize: new google.maps.Size(50, 50), // scaled size
-            origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(0, 0) // anchor
-          };
+          // let icon = {
+          //   url: "./img/im1.png", // url
+          //   scaledSize: new google.maps.Size(50, 50), // scaled size
+          //   origin: new google.maps.Point(0,0), // origin
+          //   anchor: new google.maps.Point(0, 0) // anchor
+          // };
 
-          if(i <= 10){
-            marker.setIcon(icon);
-          }
+          // if(i <= 10){
+          //   marker.setIcon(icon);
+          // }
         }
     }
 }
