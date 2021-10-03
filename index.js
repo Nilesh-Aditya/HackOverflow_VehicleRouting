@@ -47,6 +47,17 @@ async function fn () {
               map: map
           });
 
+          const contentString = `<strong>${customerName ? customerName : ''}</strong></br>
+          ${instructions ? instructions : ''} </br>
+          ${flat ? flat : ''}, 
+          ${building ? building : ''}
+          </br>${area ? area : ''}, 
+          ${city? city :  ''}`
+
+          const infowindow = new google.maps.InfoWindow({
+            content: contentString,
+          });
+
           let icon1 = {
             url: "./img/un-delivered.svg", // url
             scaledSize: new google.maps.Size(50, 50), // scaled size
@@ -69,8 +80,14 @@ async function fn () {
             anchor: new google.maps.Point(0, 0) // anchor
           };
           
-            marker.setIcon(icon1);
-          
+          marker.setIcon(icon1);
+          marker.addListener("click", () => {
+            infowindow.open({
+              anchor: marker,
+              map,
+              shouldFocus: false,
+            });
+          });
         }
     }
 }
