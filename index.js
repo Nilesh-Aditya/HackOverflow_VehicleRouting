@@ -26,6 +26,12 @@ async function fn () {
     for(let key in cust){
         console.log(cust[key]['customer_address'].lat_long);
         let coords = cust[key]['customer_address'].lat_long;
+        let customerName = cust[key]['customer_name'];
+        let instructions = cust[key]['instructions'];
+        let flat = cust[key]['customer_address'].flat;
+        let building = cust[key]['customer_address'].building;
+        let area = cust[key]['customer_address'].area;
+        let city = cust[key]['customer_address'].city;
 
         // console.log(Number(coords.latitude), Number(coords.longitude));
         if(Object.keys(coords).length > 0){
