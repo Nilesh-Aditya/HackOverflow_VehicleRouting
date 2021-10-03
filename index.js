@@ -24,7 +24,7 @@ async function fn () {
     let cust = data.data.customer_details;
     let i = 0, marker;
     for(let key in cust){
-        console.log(cust[key]['customer_address'].lat_long);
+        // console.log(cust[key]['customer_address'].lat_long);
         let coords = cust[key]['customer_address'].lat_long;
         let customerName = cust[key]['customer_name'];
         let instructions = cust[key]['instructions'];
@@ -52,7 +52,10 @@ async function fn () {
           ${flat ? flat : ''}, 
           ${building ? building : ''}
           </br>${area ? area : ''}, 
-          ${city? city :  ''}`
+          ${city? city :  ''}
+          </br>
+          </br>
+          <button onclick="myFunction()"> Not Delived </button>`
 
           const infowindow = new google.maps.InfoWindow({
             content: contentString,
@@ -88,6 +91,12 @@ async function fn () {
               shouldFocus: false,
             });
           });
+
+            const someButton = document.getElementsByClassName('btn-click');
+            function myFunction() {
+              infowindow.setContent('<div style="background-color: green">' + hellp + "</div>");
+            }
+           
         }
     }
 }
@@ -95,7 +104,7 @@ async function fn () {
 (function (){
   fn();
   arr = JSON.parse(localStorage.getItem('s1'));
-  console.log(arr);
+  // console.log(arr);
 
   const geocoder = new google.maps.Geocoder();
   const service = new google.maps.DistanceMatrixService();
