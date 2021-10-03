@@ -16,6 +16,11 @@ So, we hereby propose a novel approach to learn the local-search heuristics that
 
 <br/>
 
+## PARTICPANTS
+
+* Nilesh Aditya
+* Pragya Gupta
+* Raghav Gupta
 ---
 ## HOME
 ![HOME](./img/1.png)
