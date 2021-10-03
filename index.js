@@ -76,13 +76,6 @@ async function fn () {
             anchor: new google.maps.Point(0, 0) // anchor
           };
           
-          let icon3 = {
-            url: "./img/my_location.svg", // url
-            scaledSize: new google.maps.Size(50, 50), // scaled size
-            origin: new google.maps.Point(0,0), // origin
-            anchor: new google.maps.Point(0, 0) // anchor
-          };
-          
           marker.setIcon(icon1);
           marker.addListener("click", () => {
             infowindow.open({
@@ -94,6 +87,32 @@ async function fn () {
            
         }
     }
+
+  let icon3 = {
+    url: "./img/my_location.svg", // url
+    scaledSize: new google.maps.Size(50, 50), // scaled size
+    origin: new google.maps.Point(0,0), // origin
+    anchor: new google.maps.Point(0, 0) // anchor
+  };
+
+  let lat_lng = new google.maps.LatLng(12.931475071111107, 77.67880147111109);
+  marker = new google.maps.Marker({
+      position: lat_lng,
+      map: map,
+  });
+  const infowindow = new google.maps.InfoWindow({
+    content: '<strong class="text-primary">My Location</strong>',
+  });
+
+  marker.setIcon(icon3);
+  marker.addListener("click", () => {
+    infowindow.open({
+      anchor: marker,
+      map,
+      shouldFocus: false,
+    });
+  });
+
 }
 // fn();
 
