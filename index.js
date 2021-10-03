@@ -55,7 +55,7 @@ async function fn () {
           ${city? city :  ''}
           </br>
           </br>
-          <button onclick="myFunction()"> Not Delived </button>`
+          <button class="btn btn-danger"> Not Delivered </button>`
 
           const infowindow = new google.maps.InfoWindow({
             content: contentString,
@@ -91,18 +91,29 @@ async function fn () {
               shouldFocus: false,
             });
           });
-
-            const someButton = document.getElementsByClassName('btn-click');
-            function myFunction() {
-              infowindow.setContent('<div style="background-color: green">' + hellp + "</div>");
-            }
            
         }
     }
 }
 // fn();
+
+function eventlistners(){
+  let tag;
+  document.addEventListener('click', (e)=>{
+    if(e.target.nodeName === 'IMG'){
+      tag = e.target;
+    }
+    if(e.target.innerText == 'Not Delivered') {
+      e.target.innerText = 'Delivered';
+      e.target.classList.remove("btn-danger"); 
+      e.target.classList.add("btn-success");
+      tag.src = './img/delivered.svg';
+    }
+  })
+}
 (function (){
   fn();
+  eventlistners();
   arr = JSON.parse(localStorage.getItem('s1'));
   // console.log(arr);
 
