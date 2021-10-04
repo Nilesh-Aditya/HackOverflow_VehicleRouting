@@ -1,62 +1,80 @@
-let arr = [{lat:12.931496,lng:77.678845},{lat:12.931796,lng:77.678836},{lat:12.931665,lng:77.678551},{lat:12.9312,lng:77.679135},{lat:12.931267,lng:77.678317},{lat:12.931181,lng:77.678961},{lat:12.931496,lng:77.678845},{lat:12.931062,lng:77.678977},{lat:12.930857,lng:77.679111},{lat:12.931685,lng:77.678334},{lat:12.931496,lng:77.678845},{lat:12.931645,lng:77.678632},{lat:12.931496,lng:77.678845},{lat:12.931257,lng:77.678424},{lat:12.931495,lng:77.678844},{lat:12.931484,lng:77.678748},{lat:12.931596,lng:77.678864},{lat:12.931496,lng:77.678845},{lat:12.931496,lng:77.678845},{lat:12.931135,lng:77.678991},{lat:12.931535,lng:77.678648},{lat:12.931496,lng:77.678845},{lat:12.931563,lng:77.678339},{lat:12.930968,lng:77.678944},{lat:12.930901,lng:77.678908},{lat:12.9312,lng:77.679135},{lat:12.931496,lng:77.678845},{lat:12.931796,lng:77.678836},{lat:12.931496,lng:77.678845},{lat:12.931551,lng:77.678958},{lat:12.931718,lng:77.67837},{lat:12.931556,lng:77.678746},{lat:12.931496,lng:77.678845},{lat:12.931496,lng:77.678845},{lat:12.931287,lng:77.679432},{lat:12.931665,lng:77.678551},{lat:12.9318972,lng:77.6784902},{lat:12.931718,lng:77.678529},{lat:12.931665,lng:77.678551},{lat:12.931796,lng:77.678836},{lat:12.931665,lng:77.678551},{lat:12.9312,lng:77.679135},{lat:12.9312,lng:77.679135},{lat:12.93192,lng:77.679116},{lat:12.931796,lng:77.678836}]
-
-// let customerName = cust[key]['customer_name'];
-// let instructions = cust[key]['instructions'];
-// let flat = cust[key]['customer_address'].flat;
-// let building = cust[key]['customer_address'].building;
-// let area = cust[key]['customer_address'].area;
-// let city = cust[key]['customer_address'].city;
-
-let earth_radius = 6378.0;
-
-function distanceEarth(lat1d, lat2d, lon1d, lon2d)
-{
-    let lat1, lon1, lat2, lon2,
-           delta_lon, central_ang;
-
-    lat1 = degtorad(lat1d);
-    lon1 = degtorad(lon1d);
-    lat2 = degtorad(lat2d);
-    lon2 = degtorad(lon2d);
-    if(lat2 > lat1) [lat1, lat2] = [lat2, lat1];
-    if(lon2 > lon1){
-      delta_lon = lon2 - lon1;
-    }
-    else{
-      delta_lon = lon1 - lon2;
-    }
-    // great circle distance formula. 
-    central_ang = Math.acos ( Math.sin(lat1) * 
-                  Math.sin(lat2) + Math.cos(lat1) * 
-                  Math.cos(lat2) * Math.cos(delta_lon) );  
-                    
-    return (earth_radius * central_ang * 1000); 
-} 
-function degtorad(deg)
-{
-    return ( deg * Math.PI / 180);
-}
+def calcPathDistance(points, order):
+    dist = 0
+    for i in range(len(order) - 1):
+        # cityA = points[order[i % len(order)]]
+        # cityB = points[order[(i+1) % len(order)]]
+        # # print(cityA, cityB)
+        # d = (cityA - cityB).length()
+        dist += points[order[i]][order[i + 1]]
+    return dist
 
 
-let latitude = 0, longitude = 0;
-let n = arr.length;
+class ApproxMSTSolver:
+    def __init__(self, cities): 
+        self.cities = cities
+        self.total = len(cities)
+        self.bestOrder = []
+        self.bestDistance = float('inf')
+        self.graph = cities
+        self.parent = [None] * self.total
 
-let coords = [];
+    def printMST(self): 
+        print("Edge")
+        for i in range(1, self.total): 
+            print(i, "-", self.parent[i], "\t") 
+   
+    def minKey(self, key, mstSet):  
+        mini = float('inf') 
+        for v in range(self.total): 
+            if key[v] < mini and mstSet[v] == False: 
+                mini = key[v] 
+                min_index = v 
+        return min_index
 
-for(let i=0; i<n; i++){
-  let temp = [];
-  for(let j=0; j<n; j++){
-    temp.push(distanceEarth(arr[i].lat, arr[j].lat, arr[i].lng, arr[j].lng));
-  }
-  coords.push(temp);
-}
+    def primMST(self):  
+        key = [float('inf')] * self.total
+        key[0] = 0 
+        mstSet = [False] * self.total 
+        self.parent[0] = -1
+        for cout in range(self.total): 
+            u = self.minKey(key, mstSet)  
+            mstSet[u] = True
+            for v in range(self.total):  
+                if self.graph[u][v] > 0 and mstSet[v] == False and key[v] > self.graph[u][v]: 
+                        key[v] = self.graph[u][v] 
+                        self.parent[v] = u
+    
+    def getListOfIndices(self, l):
+        listOfIndices = []
+        for i in range(len(l) + 1):
+            indices = []
+            for j in range(len(l)):
+                if i == l[j]:
+                    indices.append(j+1)
+            listOfIndices.append(indices)
+        return listOfIndices
+
+    def preorder(self, l, i, ind):
+        if len(l[i]) <= ind:
+            return 
+        for j in range(len(l[i])):
+            self.bestOrder.append(l[i][j])
+            self.preorder(l, l[i][j], 0)
 
 
-// console.log(lat_avg, lng_avg);
-// console.log(coords);
+    def find(self):
+        self.primMST()
+        listOfIndices = self.getListOfIndices(self.parent[1:])
+        root = 0
+        self.bestOrder.append(0)
+        self.preorder(listOfIndices, 0, 0)
+        print(self.bestOrder)
+        self.bestDistance = calcPathDistance(self.cities, self.bestOrder)
 
-let coordinates =[
-  [
+
+
+cities = [
+[
     0.09503960609436035,   33.40936182736597,   37.03155779447229,
      45.559175932713885,   62.70071897667193,    37.2551619153051,
     0.09503960609436035,   50.38963706027438,   76.76306094559949,
@@ -821,72 +839,8 @@ let coordinates =[
                      0,  34.18692338795673,   73.8511556478229,
       73.8511556478229,  33.36729449475762,                  0
   ]
-];
+]
 
-let ab = {};
-let d = Math.round((arr[0].lat * 3 + arr[0].lng * 2));
-let obj = {d : d};
-let obj1 = {d : d};
-
-ab[1] = 2;
-ab[4] = 4;
-
-console.log(ab);
-console.log(Object.keys(ab).length);
-delete ab[1];
-console.log(ab);
-console.log(Object.keys(ab).length);
-
-let gt = {};
-
-for(let i = 0; i<n; i++){
-  for(let j=i; j<n; j++){
-    let key = i*n + j;
-    if(key in gt){
-      gt[key].push(coords[i][j]);
-    }
-    else{
-      gt[key] = [coords[i][j]];
-    }
-
-  }
-}
-let graph = {};
-for(let key in gt){
-  let temp = [];
-  for(let x in gt){
-    let obj = {};
-    if(x != key){
-      obj[x] = gt[x];
-      temp.push(obj);
-    }
-  }
-  graph[key] = temp;
-}
-
-console.log(graph);
-
-// function dijkstra(s){
-//   let dist = {};
-//   let prev = new Set();
-
-//   let st = {};
-//   dist[s] = 0;
-//   st[dist[s]] = s;
-
-//   while(Object.keys(ab).length > 0){
-//     let d , u;
-//     for(let key in ab){
-//       d = key;
-//       u = ab[key];
-//       break;
-//     }
-
-//     for(let x in graph[key]){
-//       for(let key2 in graph){
-
-//       }
-//     }
-
-//   }
-// }
+a = ApproxMSTSolver(cities)
+a.find()
+print(a.bestDistance)
