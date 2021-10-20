@@ -16,14 +16,13 @@ route.post('/',express.json(), async (req, res) => {
     console.log(req.body);
     try {
         const user = await User.findOne({ email });
-        console.log(user, "  user");
         if (user) {
-            if(user.password === password){
-                res.render({user:"Login Success"})
+            const auth = await bcrypt.compare(password, user.password);
+            if (!auth) {
+                throw ({password: 'Incorrect password'});
             }
             else{
-                const obj = { password: ' Incorrect password' };
-                throw obj;
+                res.status(201).json({user:"Login Success", redirect:"/maps"});
             }
         }
         else {
