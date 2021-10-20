@@ -222,12 +222,28 @@ async function file(){
 
 
 
+function eventlistners(){
+  let tag;
+  document.addEventListener('click', (e)=>{
+    if(e.target.nodeName === 'IMG'){
+      tag = e.target;
+    }
+    if(e.target.innerText == 'Not Delivered') {
+      e.target.innerText = 'Delivered';
+      e.target.classList.remove("btn-danger"); 
+      e.target.classList.add("btn-success");
+      tag.src = 'img/delivered.svg';
+    }
+  })
+}
+let myIcon = L.icon({
+  iconUrl: 'img/un-delivered.svg',
+  iconSize: [38, 95],
+  iconAnchor: [22, 94],
+  popupAnchor: [-3, -76]
+});
 
-
-
-      // eqfeed_callback();
-      
-let mymap = L.map('map').setView([12.93149600, 77.67884500], 13);
+let mymap = L.map('map').setView([12.93149600, 77.67884500], 18);
 
 const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 
@@ -245,34 +261,28 @@ async function putMarker(){
   for(let key in cust){
         // console.log(cust[key]['customer_address'].lat_long);
     let coords = cust[key]['customer_address'].lat_long;
-
+    let customerName = cust[key]['customer_name'];
+    let instructions = cust[key]['instructions'];
+    let flat = cust[key]['customer_address'].flat;
+    let building = cust[key]['customer_address'].building;
+    let area = cust[key]['customer_address'].area;
+    let city = cust[key]['customer_address'].city;
     if(Object.keys(coords).length > 0){
-        L.marker([Number(coords.latitude), Number(coords.longitude)]).addTo(mymap);
+        let marker = L.marker([Number(coords.latitude), Number(coords.longitude)], {icon : myIcon}).addTo(mymap);
+        marker.bindPopup(`
+        <strong>${customerName ? customerName : ''}</strong></br>
+           ${instructions ? instructions : ''} </br>
+           ${flat ? flat : ''}, 
+           ${building ? building : ''}
+           </br>${area ? area : ''}, 
+           ${city? city :  ''}
+           </br>
+           </br>
+           <button class="btn btn-danger"> Not Delivered </button>
+        `).openPopup();
         mark.push([Number(coords.latitude), Number(coords.longitude)]);
     }
   }
 }
 putMarker();
-      
-async function run(){
-  for(let i = 0; i<marker.length - 1; i++){
-    let x = L.Routing.control({
-        waypoints: [
-            L.latLng(marker[i][0], marker[i][1]),
-            L.latLng(marker[i + 1][0], marker[i + 1][1])
-          ]
-        }).addTo(mymap);
-  }
-}
-      
-      
-  let arr = [];
-      
-routeControl.on('routesfound', function(e) {
-  var routes = e.routes;
-  var summary = routes[0].summary;
-  // alert time and distance in km and minutes
-  arr.push([summary.totalDistance / 1000 , Math.round(summary.totalTime % 3600 / 60)]);
-});
-                
-run();
+eventlistners();
