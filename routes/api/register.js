@@ -1,6 +1,6 @@
 const express = require('express');
 const route = express.Router();
-const User = require('../../models/login');
+const User = require('../../models/register');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -24,11 +24,11 @@ route.get('/', async (req, res) => {
    } 
 });
 
-route.post('/',express.urlencoded({ extended: true }), async (req, res) => {
+route.post('/',express.json(), async (req, res) => {
 
     try {
         console.log(req.body, req.url, req.complete, req.query);
-        const { name, email, password } = req.body;
+        const { user: name, email, password } = req.body;
         const user = await User.findOne({ email });
         if (user) {
             res.status(400).json({ msg: 'User already exists' });
@@ -47,7 +47,7 @@ route.post('/',express.urlencoded({ extended: true }), async (req, res) => {
             });
 
             console.log('Succesfully new user created');
-            res.status(201).json({ msg: 'success', redirect: '/maps' });
+            res.status(201).json({ msg: 'success redirecting to home', redirect: '/' });
             return;
         }
         

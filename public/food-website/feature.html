@@ -74,11 +74,11 @@
                 <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
                 <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
                 <div class="login-form">
-                    <form action="/api/login" method="post">
+                    <form action="/login" method="post" class="LOG">
                         <div class="sign-in-htm">
                             <div class="group">
-                                <label for="user" class="label">Email Adress</label>
-                                <input id="user" name="email" type="text" class="input">
+                                <label for="email" class="label">Email Adress</label>
+                                <input id="email" name="email" type="text" class="input">
                             </div>
                             <div class="group">
                                 <label for="pass" class="label">Password</label>
@@ -86,13 +86,13 @@
                             </div>
                            <br><br>
                             <div class="group">
-                                <input type="submit" class="button" value="Sign In" class="LOG">
+                                <input type="submit" class="button" value="Sign In">
                             </div>
                             <div class="hr"></div>
                            
                         </div>
                     </form>
-                    <form action="/api/register" method="post">
+                    <form action="/register" method="post" class="REGISTER">
                         <div class="sign-up-htm">
                             <div class="group">
                                 <label for="user" class="label">Username</label>
@@ -107,8 +107,8 @@
                                 <input id="pass" type="password" class="input" data-type="password">
                             </div>
                             <div class="group">
-                                <label for="pass" class="label">Email Address</label>
-                                <input id="pass" name="email" type="text" class="input">
+                                <label for="email" class="label">Email Address</label>
+                                <input id="email" name="email" type="text" class="input">
                             </div>
                             <div class="group">
                                 <input type="submit" class="button" value="Sign Up">
@@ -171,13 +171,42 @@
        
     </div>
     <!-- Footer End -->
-    <script>
-        document.getElementsByClassName('LOG').addEventListener('click', (e)=>{
-            e.preventDefault();
-        })
-    </script>
 
         <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+        <script>
+            async function connect(d1, dest) {
+                const res = await fetch(`/api/${dest}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(d1)
+                });
+
+                const data = await res.json();
+                return data;
+            }
+
+            function connection(data ,dest) {
+                connect(data, dest).then(response => console.log(response)).catch(err => console.log(err));
+            }
+
+            document.querySelector('.LOG').addEventListener('submit', function(e){
+                e.preventDefault();
+                console.log('logging in');
+                let password = this.querySelector('#pass').value;
+                let email = this.querySelector('#email').value;
+                connection({password, email}, 'login');
+            })
+            document.querySelector('.REGISTER').addEventListener('submit', function(e){
+                e.preventDefault();
+                console.log('Registerring');
+                let password = this.querySelector('#pass').value;
+                let user = this.querySelector('#user').value;
+                let email = this.querySelector('#email').value;
+                connection({user, password, email}, 'register');
+            })
+        </script>
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

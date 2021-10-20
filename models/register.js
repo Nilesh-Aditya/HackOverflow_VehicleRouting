@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { isEmail } = require('validator')
 const bcrypt = require('bcrypt');
 
-const userSchema = new mongoose.Schema({
+const registerationSchema = new mongoose.Schema({
     name: {
         type: String,
         required:[true, 'Please Enter your name']
@@ -26,10 +26,10 @@ const userSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-userSchema.pre('save',async function(next){ 
+registerationSchema.pre('save', async function(next){ 
     const salt = await bcrypt.genSalt();
     this.password = await bcrypt.hash(this.password, salt);
     next();
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Register', registerationSchema);

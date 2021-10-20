@@ -1,5 +1,5 @@
 const express = require('express');
-const User = require('../../models/login');
+const User = require('../../models/register');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv').config({ path: '../../.env' });
 const bcrypt = require('bcrypt');
@@ -11,7 +11,7 @@ route.get('/', (req, res) => {
     res.render('login', { title: "login" , style : 'login', errors : []});
 });
 
-route.post('/',express.urlencoded({ extended: true }), async (req, res) => {
+route.post('/',express.json(), async (req, res) => {
     const { email, password } = req.body;
     console.log(req.body);
     try {

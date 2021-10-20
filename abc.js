@@ -31,7 +31,7 @@ function distanceEarth(lat1d, lat2d, lon1d, lon2d)
                   Math.cos(lat2) * Math.cos(delta_lon) );  
                     
     return (earth_radius * central_ang * 1000); 
-} 
+}
 function degtorad(deg)
 {
     return ( deg * Math.PI / 180);
