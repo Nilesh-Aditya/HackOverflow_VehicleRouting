@@ -7,8 +7,22 @@ const bcrypt = require('bcrypt');
 const route = express.Router();
 
 
-route.get('/', (req, res) => { 
-    res.render('login', { title: "login" , style : 'login', errors : []});
+route.get('/', async (req, res) => { 
+    try {
+        let userMap = {};
+        const users = await User.find({});
+        
+        users.forEach(user => {
+            userMap[user._id] = user;
+        });
+
+        console.log(userMap);
+        return res.send(userMap);
+    
+    } catch (error) {
+        console.error(error);
+        res.status(404).json({error});
+    }
 });
 
 route.post('/',express.json(), async (req, res) => {

@@ -6,15 +6,14 @@ const jwt = require('jsonwebtoken');
 
 route.get('/', async (req, res) => {
     try {
-        const { email } = req.body;
-        const user = await User.findOne({ email });
+        const user = await User.find({});
 
         if (user) {
             res.status(200).json(user);
             return;
         }
         else {
-            throw Error("User Not Found");
+            throw Error("Users Not Found");
         }
         
 
