@@ -242,6 +242,12 @@ let myIcon = L.icon({
   iconAnchor: [22, 94],
   popupAnchor: [-3, -76]
 });
+let myIcon2= L.icon({
+  iconUrl: 'img/my_location.svg',
+  iconSize: [38, 95],
+  iconAnchor: [22, 94],
+  popupAnchor: [-3, -76]
+});
 
 let mymap = L.map('map').setView([12.93149600, 77.67884500], 18);
 
@@ -284,5 +290,13 @@ async function putMarker(){
     }
   }
 }
+12.931475071111107, 77.67880147111109
 putMarker();
+let marker = L.marker([12.931475071111107, 77.67880147111109], {icon : myIcon2}).addTo(mymap);
+marker.bindPopup(`
+<strong>My Location</strong></br>
+   
+   
+`).openPopup();
+mark.push([12.931475071111107, 77.67880147111109]);
 eventlistners();
