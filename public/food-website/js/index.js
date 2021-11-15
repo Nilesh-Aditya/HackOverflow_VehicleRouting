@@ -290,13 +290,13 @@ async function putMarker(){
     }
   }
 }
-12.931475071111107, 77.67880147111109
+// 12.931475071111107, 77.67880147111109
 putMarker();
 let marker = L.marker([12.931475071111107, 77.67880147111109], {icon : myIcon2}).addTo(mymap);
+
 marker.bindPopup(`
 <strong>My Location</strong></br>
-   
-   
 `).openPopup();
+
 mark.push([12.931475071111107, 77.67880147111109]);
 eventlistners();
